@@ -40,3 +40,19 @@ describe('Listing cities on /cities', function () {
       .expect(JSON.stringify(['Loopa', 'London', 'SanFran']), done);
   });
 });
+
+describe('Creating new cities', function() {
+  it('Returns 201 status code', function(done) {
+    request(app)
+      .post('/cities')
+      .send('name=Springfield&description=what+a+fuck+?')
+      .expect(201, done);
+  });
+
+  it('Returns created city name', function(done) {
+    request(app)
+      .post('/cities')
+      .send('name=Springfield&description=what+a+fuck+?')
+      .expect(/Springfield/i, done);
+  });
+});

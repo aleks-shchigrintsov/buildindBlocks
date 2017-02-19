@@ -13,17 +13,18 @@ $(function(){
     $.ajax({
       type: 'POST', url: '/cities', data: cityData
     })
-    .error(function() {
-      $('.alert').show();
-    })
-    .success(function(cityName){
+    .done(function(cityName){
       appendToList([cityName]);
       form.trigger('reset');
+    })
+    .error(function() {
+      $('.alert').show();
     });
   });
 
   function appendToList(cities) {
     var list = [];
+    console.log(cities);
     var content, city;
     for(var i in cities){
       city = cities[i];
