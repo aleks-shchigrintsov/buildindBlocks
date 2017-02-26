@@ -30,6 +30,12 @@ app.get('/cities', function(req, resp) {
 
 app.post('/cities', urlencode, function(req, resp) {
 	var newCity = req.body;
+
+	if (!newCity.name || !newCity.description) {
+		resp.sendStatus(400);
+		return false;
+	}
+
 	client.hset('cities', newCity.name, newCity.description, function(error) {
 		if (error) throw error;
 

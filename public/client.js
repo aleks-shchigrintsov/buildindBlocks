@@ -11,15 +11,17 @@ $(function(){
     $('.alert').hide();
 
     $.ajax({
-      type: 'POST', url: '/cities', data: cityData
+      type: 'POST',
+      url: '/cities',
+      data: cityData,
+      success: function(cityName){
+        appendToList([cityName]);
+        form.trigger('reset');
+      },
+      error: function() {
+        $('.alert').show();
+      }
     })
-    .done(function(cityName){
-      appendToList([cityName]);
-      form.trigger('reset');
-    })
-    .error(function() {
-      $('.alert').show();
-    });
   });
 
   function appendToList(cities) {
