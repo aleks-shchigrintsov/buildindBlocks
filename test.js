@@ -77,12 +77,39 @@ describe('Deleting cities', function() {
 
   after(function() {
     client.flushdb();
-
   });
 
   it('Returns a 204 status code', function(done) {
     request(app)
       .delete('/cities/Banana')
       .expect(204, done)
+  });
+});
+
+describe('Show city detail', function() {
+  before(function() {
+    client.hset('cities', 'Banana', 'Some tasty fruit');
+  });
+
+  after(function() {
+    client.flushdb();
+  });
+
+  it('Get status code 200', function(done) {
+    request(app)
+      .get('/cities/Banana')
+      .expect(200, done);
+  });
+
+  it('Returns HTML format', function(done) {
+      request(app)
+        .get('/cities/Banana')
+        .expect('Content-Type', /html/, done);
+  });
+
+  it('Returns info of city', function(done) {
+      request(app)
+        .get('/cities/Banana')
+        .expect(/tasty/, done);
   });
 });
